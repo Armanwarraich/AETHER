@@ -1,0 +1,33 @@
+# =========================
+# Backend (Python / FastAPI)
+# =========================
+
+# virtual environment
+aether/backend/venv/
+
+# python cache
+__pycache__/
+*.py[cod]
+
+# environment variables
+.env
+aether/backend/.env
+
+# runtime / generated data
+aether/backend/vectorstore/
+aether/backend/chat_memory/
+aether/backend/user_memory.json
+aether/backend/uploaded.pdf
+aether/backend/*.pdf
+
+# =========================
+# Frontend (Next.js)
+# =========================
+
+frontend/node_modules/
+frontend/.next/
+frontend/out/
+
+# misc
+.DS_Store
+Thumbs.db
