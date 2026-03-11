@@ -34,29 +34,6 @@ User Upload PDF
 → Ollama generates answer  
 
 ---
-aether/
-│
-├── backend/
-│ ├── main.py → FastAPI server & routes
-│ ├── rag.py → Embedding + retrieval logic
-│ ├── brain.py → LLM prompt + streaming
-│ ├── analytics/
-│ │ └── chart_generator.py
-│ ├── vectorstore/ → FAISS indexes (generated)
-│ ├── chat_memory/ → Per‑document chat history
-│ └── user_memory.json
-│
-├── frontend/
-│ ├── pages/
-│ │ └── ChatPage.jsx → Main chat UI
-│ ├── components/
-│ └── styles/
-│
-└── requirements.txt
-
-
-
-
 
 ---
 
@@ -242,3 +219,23 @@ Built a fully local Retrieval‑Augmented Generation system enabling semantic qu
 
 
 ## 📁 Folder Structure
+aether/
+├── backend/
+│   ├── main.py                  # FastAPI routes
+│   ├── rag.py                   # Embedding + FAISS retrieval
+│   ├── brain.py                 # LLM prompt + memory
+│   ├── pdf_reader.py            # PDF text extraction
+│   ├── financial_detector.py    # Detects financial documents
+│   ├── financial_extractor.py   # Extracts revenue/profit figures
+│   ├── finance_api.py           # Stock price via yfinance
+│   ├── analytics/
+│   │   └── chart_generator.py   # Revenue trend charts
+│   ├── vectorstore/             # Auto-created, gitignored
+│   ├── chat_memory/             # Auto-created, gitignored
+│   └── requirements.txt
+│
+└── frontend/
+    ├── app/
+    │   └── chat/
+    │       └── page.js          # Main chat UI
+    └── package.json
