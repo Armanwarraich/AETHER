@@ -102,6 +102,7 @@ Document Context:
 User Question:
 {question}
 """
+    print("LLM PROMPT SIZE:", len(prompt))
 
     try:
         result = subprocess.run(
@@ -122,3 +123,20 @@ User Question:
 
     except Exception:
         return "LLM error."
+
+import subprocess
+
+def stream_llm(prompt: str):
+    process = subprocess.Popen(
+        ["ollama", "run", "mistral"],
+        stdin=subprocess.PIPE,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        text=True
+    )
+
+    process.stdin.write(prompt)
+    process.stdin.close()
+
+    for line in process.stdout:
+        yield line

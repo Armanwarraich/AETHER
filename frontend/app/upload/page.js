@@ -2,11 +2,16 @@
 import { useState } from "react";
 
 export default function Upload() {
-  const [file, setFile] = useState(null);
+  const [docs, setDocs] = useState(
+    JSON.parse(localStorage.getItem("docs") || "[]")
+  );
+  const [selectedDoc, setSelectedDoc] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  async function uploadFile() {
+  async function uploadFile(e) {
+    const file = e.target.files[0];
     if (!file) return;
+
     setLoading(true);
 
     const formData = new FormData();
@@ -19,11 +24,17 @@ export default function Upload() {
 
     const data = await res.json();
 
-    const stored = JSON.parse(localStorage.getItem("docs") || "[]");
-    localStorage.setItem("docs", JSON.stringify([...stored, data.doc_id]));
+    const newDoc = {
+      id: data.doc_id,
+      title: file.name,
+    };
+
+    const updatedDocs = [...docs, newDoc];
+    setDocs(updatedDocs);
+    localStorage.setItem("docs", JSON.stringify(updatedDocs));
+    setSelectedDoc(newDoc);
 
     setLoading(false);
-    alert("Uploaded!");
   }
 
   return (
@@ -43,7 +54,8 @@ export default function Upload() {
 
         <input
           type="file"
-          onChange={(e) => setFile(e.target.files[0])}
+          onChange={uploadFile}
+          disabled={loading}
           className="
             mb-6 w-full text-sm
             file:mr-4 file:py-2 file:px-4
@@ -54,21 +66,11 @@ export default function Upload() {
           "
         />
 
-        <button
-          onClick={uploadFile}
-          disabled={loading}
-          className={`
-            w-full py-2 rounded-lg font-medium
-            transition-all duration-200
-            ${
-              loading
-                ? "bg-white/20 cursor-not-allowed animate-pulse"
-                : "bg-white/20 hover:bg-white/30 active:scale-95"
-            }
-          `}
-        >
-          {loading ? "Processing..." : "Upload"}
-        </button>
+        {loading && (
+          <p className="text-center text-sm text-white/60 animate-pulse">
+            Processing...
+          </p>
+        )}
       </div>
     </div>
   );
